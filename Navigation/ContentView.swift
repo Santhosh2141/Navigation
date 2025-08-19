@@ -26,29 +26,50 @@ struct DetailedView: View{
         print("Created View for \(num)")
     }
 }
+
+struct DetailView: View{
+//    The @Binding property wrapper lets us pass an @State property into another view and modify it from there – we can share an @State property in several places, and changing it in one place will change it everywhere.
+    var number: Int
+    @Binding var path: [Int]
+    @Binding var path1: NavigationPath
+    var body: some View{
+        NavigationLink("Go to a random Number", value: Int.random(in: 0...1000))
+            .navigationTitle("Number: \(number)")
+            .toolbar{
+                Button("Home"){
+                    path.removeAll() // this if we use it as an array
+                    path1 = NavigationPath() // this if we use navigation Path
+                }
+            }
+    }
+}
 struct ContentView: View {
     
     @State private var path = [Int]()
     @State private var path1 = NavigationPath()
     // navigationPath can hold any type of hashable data without exposing what data that is
     var body: some View {
-        NavigationStack(path: $path1){
+        NavigationStack(path: $path){
 //            $path meaning that changing the array will automatically navigate to whatever is in the array, but also changes the array as the user presses Back in the navigation bar.
             VStack{
-                Button("Show 32") {
-                    // pressing this button makes the whole array as 32
-                    path = [32]
-                }
-
-                Button("Show 64") {
-                    // pressing this button adds 64 to the array
-                    path.append(64)
-                }
-                
-                Button("Show 32 then 64") {
-                    // this shows 32 and then 64. User needs to press back 2 times
-                    path = [32, 64]
-                }
+                DetailView(number: 0, path: $path, path1: $path1)
+                    .navigationDestination(for: Int.self){ i in
+                        DetailView(number: i, path: $path, path1: $path1)
+                    }
+//                Button("Show 32") {
+//                    // pressing this button makes the whole array as 32
+//                    path = [32]
+//                }
+//
+//                Button("Show 64") {
+//                    // pressing this button adds 64 to the array
+//                    path.append(64)
+//                }
+//
+//                Button("Show 32 then 64") {
+//                    // this shows 32 and then 64. User needs to press back 2 times
+//                    path = [32, 64]
+//                }
                 List{
                     ForEach(0..<5){ i in
                         NavigationLink("Select Number \(i)", value: i)
@@ -72,6 +93,8 @@ struct ContentView: View {
             .navigationDestination(for: String.self){ selection in
                 Text("You selected string \(selection)")
             }
+            
+            
         }
 //        NavigationStack{
 //            VStack {
