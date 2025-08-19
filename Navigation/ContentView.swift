@@ -7,6 +7,57 @@
 
 import SwiftUI
 
+class PathStore: ObservableObject{
+//    var path: NavigationPath
+    var path: [Int]{
+        didSet{
+            save()
+        }
+    }
+    
+    // this saves the path we are going in savePath variable
+    private let savePath = URL.documentsDirectory.appending(path: "SavePath")
+    
+    init() {
+        // when we relaunch the app, this takes places
+        // if savePath has any data, then we decode it
+        if let data = try? Data(contentsOf: savePath){
+            
+//            when we decode our JSON we need to decode to a specific type, then use the decoded data to create a new NavPath
+//            if let decodedData = try? JSONDecoder().decode(NavigationPath.CodableRepresentation.self, from: data)
+            if let decodedData = try? JSONDecoder().decode([Int].self, from: data){
+                
+//                path = NavigationPath(decodedData)
+                
+                // the decoded path is assigned to path which is used when relaunced
+                path = decodedData
+                return
+            }
+        }
+        
+        // when we initially launch, it is am empty array
+        path = []
+//        path = NavigationPath()
+    }
+    
+    func save() {
+        
+        // when we use path, it should be codable to JSON. but NavPath doesnt always have to be codable.
+        // so we check if the path can be coded and then pass this codable value to the encoder.
+        
+//        guard let representation = path.codable else { return }
+        do {
+//            let data = try JSONEncoder().encode(representation)
+            
+            // the path when we close is encoded and written to savePath var
+            let data = try JSONEncoder().encode(path)
+            try data.write(to: savePath)
+        } catch {
+            print("Failed to save navigation data")
+        }
+    }
+}
+
 struct Student: Hashable, Identifiable{
     
     var id = UUID()
@@ -30,31 +81,34 @@ struct DetailedView: View{
 struct DetailView: View{
 //    The @Binding property wrapper lets us pass an @State property into another view and modify it from there – we can share an @State property in several places, and changing it in one place will change it everywhere.
     var number: Int
-    @Binding var path: [Int]
-    @Binding var path1: NavigationPath
+//    @Binding var path: [Int]
+//    @Binding var path1: NavigationPath
     var body: some View{
         NavigationLink("Go to a random Number", value: Int.random(in: 0...1000))
             .navigationTitle("Number: \(number)")
             .toolbar{
                 Button("Home"){
-                    path.removeAll() // this if we use it as an array
-                    path1 = NavigationPath() // this if we use navigation Path
+//                    path.removeAll() // this if we use it as an array
+//                    path1 = NavigationPath() // this if we use navigation Path
                 }
             }
     }
 }
 struct ContentView: View {
     
-    @State private var path = [Int]()
+//    @State private var path = [Int]()
+    @State private var pathStore = PathStore()
     @State private var path1 = NavigationPath()
     // navigationPath can hold any type of hashable data without exposing what data that is
     var body: some View {
-        NavigationStack(path: $path){
+        NavigationStack(path: $pathStore.path){
 //            $path meaning that changing the array will automatically navigate to whatever is in the array, but also changes the array as the user presses Back in the navigation bar.
             VStack{
-                DetailView(number: 0, path: $path, path1: $path1)
+//                DetailView(number: 0, path: $path, path1: $path1)
+                DetailView(number: 0)
                     .navigationDestination(for: Int.self){ i in
-                        DetailView(number: i, path: $path, path1: $path1)
+//                        DetailView(number: i, path: $path, path1: $path1)
+                        DetailView(number: i)
                     }
 //                Button("Show 32") {
 //                    // pressing this button makes the whole array as 32
