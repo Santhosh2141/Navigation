@@ -148,6 +148,11 @@ struct ContentView: View {
                 Text("You selected string \(selection)")
             }
             
+            NavigationLink{
+                NavigationStyles()
+            } label: {
+                Text("Go To Nav Styles")
+            }
             
         }
 //        NavigationStack{

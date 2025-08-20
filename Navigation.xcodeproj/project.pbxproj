@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7F0316A72E561F33003AF335 /* NavigationStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F0316A62E561F33003AF335 /* NavigationStyles.swift */; };
 		7FA093002E537D3400733750 /* NavigationApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FA092FF2E537D3400733750 /* NavigationApp.swift */; };
 		7FA093022E537D3400733750 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FA093012E537D3400733750 /* ContentView.swift */; };
 		7FA093042E537D3600733750 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7FA093032E537D3600733750 /* Assets.xcassets */; };
@@ -14,6 +15,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7F0316A62E561F33003AF335 /* NavigationStyles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationStyles.swift; sourceTree = "<group>"; };
 		7FA092FC2E537D3400733750 /* Navigation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Navigation.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7FA092FF2E537D3400733750 /* NavigationApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationApp.swift; sourceTree = "<group>"; };
 		7FA093012E537D3400733750 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -53,6 +55,7 @@
 			children = (
 				7FA092FF2E537D3400733750 /* NavigationApp.swift */,
 				7FA093012E537D3400733750 /* ContentView.swift */,
+				7F0316A62E561F33003AF335 /* NavigationStyles.swift */,
 				7FA093032E537D3600733750 /* Assets.xcassets */,
 				7FA093052E537D3600733750 /* Preview Content */,
 			);
@@ -138,6 +141,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7FA093022E537D3400733750 /* ContentView.swift in Sources */,
+				7F0316A72E561F33003AF335 /* NavigationStyles.swift in Sources */,
 				7FA093002E537D3400733750 /* NavigationApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
